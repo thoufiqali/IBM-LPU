@@ -3,6 +3,7 @@ package in.tucaurto.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,11 +32,17 @@ public class User
 	private long pincode;
 	private String imageUrl;
 	
-	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="userlogin_id", referencedColumnName="id")
+	@OneToOne(fetch = FetchType.LAZY,cascade= CascadeType.ALL)
+	@JoinColumn(name="userlogin_id")
 	private UserLogin userLogin;
 	
 	
+	public UserLogin getUserLogin() {
+		return userLogin;
+	}
+	public void setUserLogin(UserLogin userLogin) {
+		this.userLogin = userLogin;
+	}
 	public String getName() {
 		return name;
 	}

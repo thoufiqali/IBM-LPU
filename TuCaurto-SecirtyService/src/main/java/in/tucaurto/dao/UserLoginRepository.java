@@ -1,9 +1,10 @@
 package in.tucaurto.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import in.tucaurto.entity.UserLogin;
-
-public interface UserLoginRepository extends CrudRepository<UserLogin, Long> {
+@Repository
+public interface UserLoginRepository extends JpaRepository<UserLogin, Long> {
     UserLogin findByUsername(String username);
 }
