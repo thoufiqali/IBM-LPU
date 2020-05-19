@@ -7,7 +7,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +19,7 @@ import in.tucaurto.entity.UserDTO;
 import in.tucaurto.service.JwtUserDetailsService;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin(origins= "http://localhost:4200")
 public class JwtAuthenticationController {
 
 	@Autowired
@@ -36,11 +35,13 @@ public class JwtAuthenticationController {
 	public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		
+		
+		
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		
 
 		return ResponseEntity.ok().body(new JwtResponse(token, userDetails.getUsername()));
 	}

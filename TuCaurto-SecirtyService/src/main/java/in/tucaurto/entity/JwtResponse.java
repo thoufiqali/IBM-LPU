@@ -1,6 +1,10 @@
 package in.tucaurto.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 public class JwtResponse implements Serializable {
 
@@ -22,4 +26,6 @@ public class JwtResponse implements Serializable {
 	public String getToken() {
 		return this.jwttoken;
 	}
+	
+	
 }

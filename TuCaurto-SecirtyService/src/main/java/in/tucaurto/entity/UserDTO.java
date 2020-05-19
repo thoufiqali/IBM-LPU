@@ -2,34 +2,27 @@ package in.tucaurto.entity;
 
 public class UserDTO 
 {
-	private String firstname;
-	private String lastname;
+	private String name;
     private String username;
     private String password;
-    private long phone;
+    private long contactNumber;
 
-    public String getFirstname() {
-		return firstname;
+    
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public long getContactNumber() {
+		return contactNumber;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public long getPhone() {
-		return phone;
-	}
-
-	public void setPhone(long phone) {
-		this.phone = phone;
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 
 	public String getUsername() {
@@ -47,4 +40,13 @@ public class UserDTO
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public UserDTO(String name, String username, String password, long contactNumber) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.contactNumber = contactNumber;
+	}
+
 }

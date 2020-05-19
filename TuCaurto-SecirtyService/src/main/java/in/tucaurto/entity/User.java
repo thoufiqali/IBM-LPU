@@ -1,9 +1,13 @@
 package in.tucaurto.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,38 +18,59 @@ public class User
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	private String firstname;
-	private String lastname;
+	private String name;
 	private String email;
 	private String gender;
-	private int age;
 	private String city;
 	private String state;
-	private long phone;
 	
-	public long getPhone() {
-		return phone;
+	
+	private long contactNumber;
+	
+	private String address;
+	private long pincode;
+	private String imageUrl;
+	
+	@OneToOne(cascade= CascadeType.ALL)
+	@JoinColumn(name="userlogin_id", referencedColumnName="id")
+	private UserLogin userLogin;
+	
+	
+	public String getName() {
+		return name;
 	}
-	public void setPhone(long phone) {
-		this.phone = phone;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public long getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public long getPincode() {
+		return pincode;
+	}
+	public void setPincode(long pincode) {
+		this.pincode = pincode;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 	public String getEmail() {
 		return email;
@@ -59,12 +84,6 @@ public class User
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
 	public String getCity() {
 		return city;
 	}
@@ -76,6 +95,15 @@ public class User
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public User(String name, String email, long contactNumber) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.contactNumber = contactNumber;
+	}
+	public User() {
+		super();
 	}
 	
 	
