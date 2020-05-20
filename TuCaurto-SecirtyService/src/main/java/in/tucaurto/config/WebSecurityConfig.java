@@ -27,7 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService jwtUserDetailsService;
-
+	
+	
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 
@@ -35,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		
 		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+		
 	}
 
 	@Bean
@@ -54,7 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				.authorizeRequests().antMatchers("/authenticate")
 				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
-				.permitAll().antMatchers("/register").permitAll().
+				.permitAll().antMatchers("/user/**").permitAll()
+				.antMatchers("/support/**").permitAll().
 						anyRequest().authenticated().and().
 						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

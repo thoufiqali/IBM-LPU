@@ -20,7 +20,10 @@ public class User
 	private long id;
 	
 	private String name;
+	
+	@Column(unique = true)
 	private String email;
+	
 	private String gender;
 	private String city;
 	private String state;

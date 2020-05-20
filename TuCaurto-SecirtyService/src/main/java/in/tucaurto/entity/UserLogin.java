@@ -1,7 +1,5 @@
 package in.tucaurto.entity;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,7 +22,7 @@ public class UserLogin
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
-    @Column
+    @Column(unique = true)
     private String username;
     
     @Column
@@ -32,6 +31,10 @@ public class UserLogin
     
     @OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="userLogin")
    	private User user;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="role_id")
+    private Role role;
 
     public String getUsername() 
     {
@@ -44,6 +47,14 @@ public class UserLogin
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public void setUsername(String username) 

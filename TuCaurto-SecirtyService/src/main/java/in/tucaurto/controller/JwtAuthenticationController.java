@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import in.tucaurto.config.JwtTokenUtil;
 import in.tucaurto.entity.JwtRequest;
 import in.tucaurto.entity.JwtResponse;
+import in.tucaurto.entity.Role;
+import in.tucaurto.entity.SupportDTO;
 import in.tucaurto.entity.UserDTO;
 import in.tucaurto.service.JwtUserDetailsService;
 
@@ -30,6 +32,9 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+//	@Autowired
+//	private JwtSupportDetailsService supportDetailsService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
@@ -42,13 +47,18 @@ public class JwtAuthenticationController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		
-
-		return ResponseEntity.ok().body(new JwtResponse(token, userDetails.getUsername()));
+		Role role= userDetailsService.findRole(authenticationRequest.getUsername());
+		return ResponseEntity.ok().body(new JwtResponse(token, userDetails.getUsername(),role.getRole()));
 	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-		return ResponseEntity.ok(userDetailsService.save(user));
+		return ResponseEntity.ok(userDetailsService.saveUser(user));
+	}
+	
+	@RequestMapping(value = "/support/register", method = RequestMethod.POST)
+	public ResponseEntity<?> saveSupport(@RequestBody SupportDTO support) throws Exception{
+		return ResponseEntity.ok().body(userDetailsService.saveSupport(support));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

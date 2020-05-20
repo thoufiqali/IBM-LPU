@@ -14,23 +14,4 @@ public class UserController {
         return "Welcome!";
     }
     
-    @RequestMapping(value="/admin", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminPortal()
-    {
-    	return "Welcome to Admin Portal";
-    }
-    @RequestMapping(value="/user", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER')")
-    public String userPortal()
-    {
-    	return "Welcome to User Portal";
-    }
-    
-    @PreAuthorize("hasRole('SUPPORT')")
-    @RequestMapping(value="/support", method = RequestMethod.GET)
-    public String supportPortal()
-    {
-    	return "Welcome to Support Portal";
-    }
 }
