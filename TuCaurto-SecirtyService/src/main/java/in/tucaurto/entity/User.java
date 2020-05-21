@@ -12,17 +12,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User 
 {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	private Long id;
+	private String email;
 	private String name;
 	
-	@Column(unique = true)
-	private String email;
+	
 	
 	private String gender;
 	private String city;
@@ -76,12 +75,7 @@ public class User
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+
 	public String getEmail() {
 		return email;
 	}

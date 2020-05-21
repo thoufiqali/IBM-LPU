@@ -2,6 +2,7 @@ package in.tucaurto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -20,10 +21,11 @@ import in.tucaurto.entity.JwtResponse;
 import in.tucaurto.entity.Role;
 import in.tucaurto.entity.SupportDTO;
 import in.tucaurto.entity.UserDTO;
+import in.tucaurto.service.EmailSenderService;
 import in.tucaurto.service.JwtUserDetailsService;
 
 @RestController
-@CrossOrigin(origins= "http://localhost:4200")
+//@CrossOrigin(origins= "http://localhost:4200")
 public class JwtAuthenticationController {
 
 	@Autowired
@@ -34,6 +36,9 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+	@Autowired
+	private EmailSenderService emailSenderService;
 	
 //	@Autowired
 //	private JwtSupportDetailsService supportDetailsService;
@@ -55,19 +60,33 @@ public class JwtAuthenticationController {
 	
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-		return ResponseEntity.ok(userDetailsService.saveUser(user));
+		return userDetailsService.saveUser(user);
 	}
 	
 	@RequestMapping(value = "/support/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveSupport(@RequestBody SupportDTO support) throws Exception{
-		return ResponseEntity.ok().body(userDetailsService.saveSupport(support));
+		return ResponseEntity.ok(userDetailsService.saveSupport(support));
 	}
 	
-	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
-	public ResponseEntity<?> saveSupport(@RequestParam String newPass)
+	@RequestMapping(value = "/generate-otp", method = RequestMethod.POST)
+	public ResponseEntity<?> reqPass(@RequestParam String email)
 	{
-		
-		return null;
+		emailSenderService.sendEmail(email);
+		return ResponseEntity.ok("Please check your mail!!");
+	}
+	
+	@RequestMapping(value="/submit-otp", method=RequestMethod.POST)
+	public ResponseEntity<?> checkOtp(@RequestParam String email, @RequestParam String otp)
+	{
+		String status=emailSenderService.checkOtp(email, otp);
+		return ResponseEntity.ok(status);
+	}
+	
+	@RequestMapping(value="/change-pass", method=RequestMethod.POST)
+	public ResponseEntity<?> changePass(@RequestParam String email,@RequestParam String newPass)
+	{
+		String status=userDetailsService.changePass(email, newPass);
+		return ResponseEntity.ok(status);
 	}
 	private void authenticate(String username, String password) throws Exception {
 		try {

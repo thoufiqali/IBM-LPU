@@ -57,6 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests().antMatchers("/authenticate")
 				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
 				.permitAll().antMatchers("/user/**").permitAll()
+				.antMatchers("/generate-otp").permitAll()
+				.antMatchers("/change-pass").permitAll()
+				.antMatchers("/submit-otp").permitAll()
 				.antMatchers("/support/**").permitAll().
 						anyRequest().authenticated().and().
 						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

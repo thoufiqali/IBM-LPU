@@ -29,7 +29,19 @@ public class UserLogin
     @JsonIgnore
     private String password;
     
-    @OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="userLogin")
+    @Column
+    @JsonIgnore
+    private String otp;
+    
+    public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="userLogin")
    	private User user;
     
     @ManyToOne(optional = false)

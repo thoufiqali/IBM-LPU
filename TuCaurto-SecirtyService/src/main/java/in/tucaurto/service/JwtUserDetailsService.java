@@ -3,6 +3,7 @@ package in.tucaurto.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -47,16 +48,13 @@ public class JwtUserDetailsService implements UserDetailsService {
 		
 		return user.getRole();
 	}
-	public void updatePassword(String newPass)
-	{
-		
-	}
-	public String saveUser(UserDTO user) 
+
+	public ResponseEntity<?> saveUser(UserDTO user) 
 	{
 		
 		if(userloginDao.findByUsername(user.getUsername()) != null)
 		{
-			return "Username already taken!!";
+			return ResponseEntity.ok("Username already Taken");
 		}
 		Role role=new Role();
 		role.setId(1);
@@ -67,8 +65,9 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setRole(role);
 		User userDetails= new User(user.getName(),user.getUsername(),user.getContactNumber());
 		userDetails.setUserLogin(newUser);
-		userDao.save(userDetails);
-		return "User successfully registered !!";
+		userDetails.setEmail(user.getUsername());
+		return ResponseEntity.ok(userDao.save(userDetails));
+		
 	}
 	public String saveSupport(SupportDTO support)
 	{
@@ -90,5 +89,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 		customerSupport.setUserLogin(newUser);
 		supportDao.save(customerSupport);
 		return "New Support account created!!!";
+	}
+	
+	public String changePass(String email,String newPass)
+	{
+		UserLogin user=userloginDao.findByUsername(email);
+		user.setPassword(bcryptEncoder.encode(newPass));
+		user.setOtp(null);
+		userloginDao.save(user);
+		return "Password successfully changed!";
 	}
 }
