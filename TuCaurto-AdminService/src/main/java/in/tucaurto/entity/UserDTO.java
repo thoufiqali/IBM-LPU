@@ -1,26 +1,11 @@
 package in.tucaurto.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@Entity
-@Table(name="users")
-public class User 
+public class UserDTO 
 {
-
+private String name;
 	
-	private String name;
-	@Id
 	@Column(unique = true)
 	private String email;
 	
@@ -35,47 +20,18 @@ public class User
 	private long pincode;
 	private String imageUrl;
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-	@OneToOne(fetch = FetchType.LAZY,cascade= CascadeType.ALL)
-	@JoinColumn(name="userlogin_id")
-	private UserLogin userLogin;
-	
-	
 	public UserLogin getUserLogin() {
 		return userLogin;
 	}
 	public void setUserLogin(UserLogin userLogin) {
 		this.userLogin = userLogin;
 	}
+	private UserLogin userLogin;
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public long getContactNumber() {
-		return contactNumber;
-	}
-	public void setContactNumber(long contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public long getPincode() {
-		return pincode;
-	}
-	public void setPincode(long pincode) {
-		this.pincode = pincode;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 	public String getEmail() {
 		return email;
@@ -101,17 +57,48 @@ public class User
 	public void setState(String state) {
 		this.state = state;
 	}
-	public User(String name, String email, long contactNumber) {
+	public long getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public long getPincode() {
+		return pincode;
+	}
+	public void setPincode(long pincode) {
+		this.pincode = pincode;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public UserDTO(String name, String email, String gender, String city, String state, long contactNumber,
+			String address, long pincode, String imageUrl) {
 		super();
 		this.name = name;
 		this.email = email;
+		this.gender = gender;
+		this.city = city;
+		this.state = state;
 		this.contactNumber = contactNumber;
+		this.address = address;
+		this.pincode = pincode;
+		this.imageUrl = imageUrl;
+		
 	}
-	public User() {
+	public UserDTO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	
 	
 	
 }

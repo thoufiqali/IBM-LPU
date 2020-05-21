@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import in.tucaurto.dao.UserDAO;
 import in.tucaurto.entity.User;
+import in.tucaurto.entity.UserDTO;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -60,6 +61,29 @@ public class UserServiceImpl implements UserService
 	@Override
 	public User findByContactNumber(long contactNumber) {
 		return userDao.findByContactNumber(contactNumber);
+	}
+
+
+	@Override
+	public ResponseEntity<?> updateUser(UserDTO userDto) 
+	{
+		String id= userDto.getEmail();
+		User user=userDao.findByEmail(id);
+		if(userDao.findByEmail(id) == null)
+		{
+			return ResponseEntity.ok().body("No registered user Found");
+		}
+		user.setEmail(id);
+		user.setAddress(userDto.getAddress());
+		user.setCity(userDto.getCity());
+		user.setContactNumber(userDto.getContactNumber());
+		user.setGender(userDto.getGender());
+		user.setImageUrl(userDto.getImageUrl());
+		user.setName(userDto.getName());
+		user.setState(userDto.getState());
+		user.setPincode(userDto.getPincode());
+		user.setUserLogin(user.getUserLogin());
+		return ResponseEntity.ok().body(userDao.save(user));
 	}
 
 	
