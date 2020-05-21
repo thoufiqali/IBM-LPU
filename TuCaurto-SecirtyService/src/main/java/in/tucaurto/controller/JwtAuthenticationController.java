@@ -7,9 +7,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.tucaurto.config.JwtTokenUtil;
@@ -21,7 +23,7 @@ import in.tucaurto.entity.UserDTO;
 import in.tucaurto.service.JwtUserDetailsService;
 
 @RestController
-//@CrossOrigin(origins= "http://localhost:4200")
+@CrossOrigin(origins= "http://localhost:4200")
 public class JwtAuthenticationController {
 
 	@Autowired
@@ -60,7 +62,13 @@ public class JwtAuthenticationController {
 	public ResponseEntity<?> saveSupport(@RequestBody SupportDTO support) throws Exception{
 		return ResponseEntity.ok().body(userDetailsService.saveSupport(support));
 	}
-
+	
+	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
+	public ResponseEntity<?> saveSupport(@RequestParam String newPass)
+	{
+		
+		return null;
+	}
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

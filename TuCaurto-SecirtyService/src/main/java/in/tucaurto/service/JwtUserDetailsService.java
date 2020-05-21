@@ -47,7 +47,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 		
 		return user.getRole();
 	}
-
+	public void updatePassword(String newPass)
+	{
+		
+	}
 	public String saveUser(UserDTO user) 
 	{
 		
