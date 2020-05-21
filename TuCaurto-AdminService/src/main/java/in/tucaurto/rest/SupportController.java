@@ -21,18 +21,19 @@ public class SupportController
 	private SupportService supportService;
 	
 	
+	public SupportController(SupportService supportService) {
+		super();
+		this.supportService = supportService;
+	}
+
+
+
 	@GetMapping("/support")
 	public ResponseEntity<List<CustomerSupport>> listUsers()
 	{
 		return ResponseEntity.ok().body(supportService.findAll());
 	}
 	
-	
-	public SupportController(SupportService supportService) 
-	{
-		super();
-		this.supportService = supportService;
-	}
 
 
 	@DeleteMapping("/support/{supportId}")
@@ -41,17 +42,5 @@ public class SupportController
 		return ResponseEntity.ok().body(supportService.deleteByUsername(email));
 	}
 	
-	
-	
-	@GetMapping("/support/name/{userName}")
-	public ResponseEntity<List<CustomerSupport>> findByNameContaining(@PathVariable(name="userName") String name)
-	{
-		return ResponseEntity.ok().body(supportService.findByNameContaining(name));
-	}
-	
-	@GetMapping("/support/phone/{phone}")
-	public ResponseEntity<CustomerSupport> findByPhone(@PathVariable(name="phone") long phone)
-	{
-		return ResponseEntity.ok().body(supportService.findByContactNumber(phone));
-	}
+
 }

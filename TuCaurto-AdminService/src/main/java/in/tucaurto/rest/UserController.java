@@ -28,12 +28,6 @@ public class UserController
 		this.userService = userService;
 	}
 	
-	@PostMapping("/update-user")
-	public ResponseEntity<?> updateUser(@RequestBody UserDTO userDto)
-	{
-		return userService.updateUser(userDto);
-	}
-	
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> listUsers()
 	{
@@ -47,27 +41,4 @@ public class UserController
 		return ResponseEntity.ok().body(userService.deleteUser(email));
 	}
 	
-	@GetMapping("/users/{userId}")
-	public ResponseEntity<User> findUser(@PathVariable(name="userId") String email)
-	{
-		return ResponseEntity.ok().body(userService.findUser(email));
-	}
-	
-	@GetMapping("/users/city/{cityName}")
-	public ResponseEntity<List<User>> findByCity(@PathVariable(name="cityName") String city)
-	{
-		return ResponseEntity.ok().body(userService.findByCity(city));
-	}
-	
-	@GetMapping("/users/name/{userName}")
-	public ResponseEntity<List<User>> findByNameContaining(@PathVariable(name="userName") String name)
-	{
-		return ResponseEntity.ok().body(userService.findByNameContaining(name));
-	}
-	
-	@GetMapping("/users/phone/{phone}")
-	public ResponseEntity<User> findByPhone(@PathVariable(name="phone") long phone)
-	{
-		return ResponseEntity.ok().body(userService.findByContactNumber(phone));
-	}
 }
