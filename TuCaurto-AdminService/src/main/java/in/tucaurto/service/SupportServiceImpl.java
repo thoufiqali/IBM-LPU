@@ -28,28 +28,25 @@ public class SupportServiceImpl implements SupportService
 		return "Support role deleted!!";
 	}
 
-	@Override
-	public List<CustomerSupport> findByNameContaining(String name) {
-
-		return supportDao.findByNameContaining(name);
-	}
-
-	@Override
-	public CustomerSupport findByContactNumber(long number) {
-		
-		return supportDao.findByContactNumber(number);
-	}
-
-	@Override
-	public CustomerSupport findByUsername(String username) 
-	{
-		return supportDao.findByUsername(username);
-	}
+	
 
 	@Override
 	public List<CustomerSupport> findAll() {
 
 		return supportDao.findAll();
+	}
+
+
+	@Override
+	public String createSupport(CustomerSupport support) 
+	{
+		if(supportDao.existsByUsername(support.getUsername()))
+		{
+			return "Support with given details already exists!!";
+		}
+		supportDao.save(support);
+		return "Support role created";
+		
 	}
 
 }
